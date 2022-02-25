@@ -1,0 +1,18 @@
+.homepage {
+    /* Auto layout */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-width: 730px;
+
+    position: static;
+    width: 100%;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 1;
+    align-self: stretch;
+    flex-grow: 0;
+    margin: 75px 0px;
+}

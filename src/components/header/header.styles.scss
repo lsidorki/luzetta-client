@@ -1,0 +1,68 @@
+.header {
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 21px 31px;
+
+    position: static;
+    width: 100%;
+    min-width: 700px;
+    height: 82px;
+    top: 0px;
+
+    background: #FFC001;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 0;
+
+    .logo {
+        height: 40px;
+
+        font-family: Passion One;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 36px;
+
+        color: #FFFFFF;
+    }
+    
+    .options {
+        /* Auto layout */
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: center;
+        padding: 0px;
+    
+        /* Inside auto layout */
+        flex: none;
+        order: 1;
+        align-self: stretch;
+        flex-grow: 1;
+
+        .option {
+            position: static;
+            height: 22px;
+            top: 9px;
+
+            font-family: Lato;
+            font-style: normal;
+            font-weight: 300;
+            font-size: 18px;
+            line-height: 22px;
+
+            /* identical to box height */
+            text-align: right;
+
+            color: #FFFFFF;
+
+            /* Inside auto layout */
+            flex: none;
+            margin: 0px 30px;
+        }
+    }
+}

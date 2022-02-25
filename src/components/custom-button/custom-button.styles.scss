@@ -1,0 +1,39 @@
+.custom-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 25px 100px;
+
+    background: #FFC001;
+    border-radius: 10px;
+
+    border: none;
+    cursor: pointer;
+
+    font-family: Lato;
+    font-style: normal;
+    font-weight: normal;
+    color: white;
+    font-size: 26px;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    margin: 10px 0px;
+
+    &:hover {
+        background: #ffc001da;
+    }
+
+    &.donate {
+        background-color: #B494FF;
+        color: white;
+
+        &:hover {
+            background-color: #c5acff;
+            border: none;
+        }
+    }
+}
