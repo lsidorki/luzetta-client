@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { openFileStart } from "../../redux/import-xlsx/import-xlsx.actions";
+import { openFileStart } from "../../redux/import-file/import-file.actions";
 import CustomButton from "../custom-button/custom-button.component";
 import './control-center.styles.scss'
 import { read, utils } from "xlsx"
@@ -16,7 +16,7 @@ const ControlCenter = ({openFileStart}) => {
                 const sheetName = workbook.SheetNames[0];
                 const worksheet = workbook.Sheets[sheetName];
                 const json = utils.sheet_to_json(worksheet);
-                console.log(json);
+                openFileStart(json)
             };
             reader.readAsArrayBuffer(e.target.files[0]);
         }
@@ -31,7 +31,7 @@ const ControlCenter = ({openFileStart}) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-    openFileStart: () => dispatch(openFileStart())
+    openFileStart: (importedData) => dispatch(openFileStart({importedData}))
 })
 
 export default connect(null, mapDispatchToProps)(ControlCenter);
