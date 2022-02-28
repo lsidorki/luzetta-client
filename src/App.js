@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 
 import './App.scss';
 import Header from './components/header/header.component';
@@ -6,8 +6,19 @@ import HomePage from './pages/homepage/homepage.component';
 import AboutPage from './pages/about/about.component';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
 import SettingsPage from './pages/settings/settings.component';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { selectCurrentUser } from './redux/user/user.selectors';
+import { checkUserSession } from './redux/user/user.actions';
 
 const App = () => {
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(checkUserSession());
+  }, [dispatch]);
+
   return (
     <div>
       <Header />

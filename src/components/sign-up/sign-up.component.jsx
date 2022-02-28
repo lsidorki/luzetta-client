@@ -9,8 +9,8 @@ import { signUpStart } from "../../redux/user/user.actions";
 
 const SignUp = ({signUpStart}) => {
 
-    const [userCredentials, setUserCredentials] = useState({displayName: '', email: '', password: '', confirmPassword: ''});
-    const {displayName, email, password, confirmPassword} = userCredentials;
+    const [userCredentials, setUserCredentials] = useState({barcode: '', email: '', password: '', confirmPassword: ''});
+    const {barcode, email, password, confirmPassword} = userCredentials;
 
     const handleSubmit = async event => {
         event.preventDefault();
@@ -20,7 +20,7 @@ const SignUp = ({signUpStart}) => {
             return;
         }
 
-        signUpStart({email, password, displayName});
+        signUpStart({email, password, barcode});
     }
 
     const handleChange = event => {
@@ -35,10 +35,10 @@ const SignUp = ({signUpStart}) => {
             <form onSubmit={handleSubmit}>
                 <FormInput
                     type='text'
-                    name='displayName'
-                    value={displayName}
+                    name='barcode'
+                    value={barcode}
                     onChange={handleChange}
-                    label='Display Name'
+                    label='barcode'
                     required
                 />
                 <FormInput

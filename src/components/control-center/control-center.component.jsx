@@ -16,7 +16,7 @@ const ControlCenter = ({openFileStart}) => {
                 const sheetName = workbook.SheetNames[0];
                 const worksheet = workbook.Sheets[sheetName];
                 const json = utils.sheet_to_json(worksheet);
-                openFileStart(json)
+                openFileStart(json);
             };
             reader.readAsArrayBuffer(e.target.files[0]);
         }
@@ -31,7 +31,7 @@ const ControlCenter = ({openFileStart}) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-    openFileStart: (importedData) => dispatch(openFileStart({importedData}))
+    openFileStart: (importedData, sheetName) => dispatch(openFileStart({importedData, sheetName}))
 })
 
 export default connect(null, mapDispatchToProps)(ControlCenter);

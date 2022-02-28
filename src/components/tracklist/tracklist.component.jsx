@@ -4,6 +4,7 @@ import './tracklist.styles.scss'
 
 const Tracklist = () => {
     const track1 = {
+        id: 1,
         artist: "MØ",
         title: "Goosebumps",
         album: "Motordrom",
@@ -13,6 +14,7 @@ const Tracklist = () => {
         imageUrl: "https://upload.wikimedia.org/wikipedia/en/5/56/M%C3%98_-_Motordrome.png"
     }
     const track2 = {
+        id: 2,
         artist: "Aurora",
         title: "The Forbidden Fruits of Eden",
         album: "The Gods We Can Touch",
@@ -22,6 +24,7 @@ const Tracklist = () => {
         imageUrl: "https://upload.wikimedia.org/wikipedia/en/f/f5/Aurora_-_The_Gods_We_Can_Touch.jpeg"
     }
     const track3 = {
+        id: 3,
         artist: "FKA Twigs",
         title: "Pamplemousse",
         album: "Caprisongs",
@@ -30,11 +33,12 @@ const Tracklist = () => {
         composer: "Díaz-Reixa, Halm, FKA twigs",
         imageUrl: "https://upload.wikimedia.org/wikipedia/en/8/89/FKA_twigs_-_Caprisongs.jpeg"
     }
+    const tracklist = [track1, track2, track3];
     return (
         <div className="tracklist">
-            <TrackItem track={track1}/>
-            <TrackItem track={track2}/>
-            <TrackItem track={track3}/>
+        {
+            tracklist.map(track => <TrackItem key={track.id} track={track}/>)
+        }
         </div>
     )
 }

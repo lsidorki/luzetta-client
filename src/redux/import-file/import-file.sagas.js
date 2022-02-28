@@ -6,11 +6,24 @@ export function* processImportedData({payload : {importedData}}) {
     try {
         console.log(importedData);
         const barcodes = new Set();
-        console.log(importedData.includes("Autor_Wpisu"));
+        const tracklist = new Set();
         importedData.map(data => {
-            barcodes.add(data.Autor_wpisu);
-            return barcodes;
+            const {Autor_wpisu, Artist, Title, Album, Composer, Category, Runtime} = data;
+            const lyricits = data['Writer/Lyricist'];
+            barcodes.add(Autor_wpisu);
+            tracklist.add({
+                barcode: Autor_wpisu,
+                artist: Artist,
+                title: Title,
+                album: Album,
+                composer: Composer,
+                category: Category,
+                runtime: Runtime,
+                lyricist: lyricits
+            });
+            return tracklist;
         });
+        console.log(tracklist);
         console.log(barcodes);
         if(barcodes.size < 1) {
             throw new Error("Could not find any entries. Endure you have the correct file format.")

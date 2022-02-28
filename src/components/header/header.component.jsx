@@ -1,18 +1,39 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { signOutStart } from "../../redux/user/user.actions";
 import './header.styles.scss'
+import { createStructuredSelector } from "reselect";
+import { connect } from "react-redux";
+import { selectCurrentUser } from "../../redux/user/user.selectors";
 
-const Header = () => (
+const Header = ({currentUser, signOutStart}) => (
     <div className="header">
         <Link className="logo" to="/">LUZetta</Link>
         <div className="options">
             <Link className="option" to="/">HOME</Link>
             <Link className="option" to="/about">ABOUT</Link>
-            <Link className="option" to="/signin">SIGN IN</Link>
-            <Link className="option" to="/settings">SETTINGS</Link>
+            {
+                currentUser ?
+                <Link className="option" to="/settings">SETTINGS</Link>
+                :
+                null
+            }
+            {
+                currentUser ?
+                (<div className="option" onClick={signOutStart}>SIGN OUT</div>)
+                :
+                (<Link className="option" to="/signin">SIGN IN</Link>)
+            }
         </div>
     </div>
 )
 
+const mapDispatchToProps = dispatch => ({
+    signOutStart: () => dispatch(signOutStart())
+})
 
-export default Header;
+const mapStateToProps = createStructuredSelector({
+    currentUser: selectCurrentUser,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
