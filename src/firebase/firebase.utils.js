@@ -1,4 +1,4 @@
-import { getFirestore, doc, addDoc, getDoc } from 'firebase/firestore/lite';
+import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
 
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
@@ -31,21 +31,20 @@ export const createUserProfile = async (userAuth, additionalData) => {
 
     const userRef = doc(firestore, `users/${userAuth.uid}`);
     const snapShot = await getDoc(userRef);
-    console.log("user snapshot : " + snapShot);
-
-    if(!snapShot.exists) {
-        const {barcode, email} = userAuth;
+    
+    if(!snapShot.exists()) {
+        const { displayName, email } = userAuth;
         const createdAt = new Date();
-
         try {
-            await addDoc(userRef, {
-                barcode, email, createdAt, ...additionalData
+            await setDoc(userRef, {
+                displayName, email, createdAt, ...additionalData
             })
         } catch (error) {
             console.log('error creating a user', error.message);
         }
     }
-  return userRef;
+
+    return userRef;
 }
 
 export const getCurrentUser = () => {

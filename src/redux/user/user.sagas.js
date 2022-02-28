@@ -1,5 +1,5 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-import { getDoc } from 'firebase/firestore/lite';
+import { getDoc } from 'firebase/firestore';
 import { all, call, put, takeLatest } from "redux-saga/effects";
 import { auth, googleProvider, createUserProfile, getCurrentUser } from "../../firebase/firebase.utils";
 import { signInFailure, signInSuccess, signOutFailure, signOutSuccess, signUpFailure, signUpSuccess } from "./user.actions";
@@ -8,7 +8,7 @@ import UserActionTypes from "./user.types";
 export function* getSnapshotFromUserAuth(userAuth, additionalData) {
     try {
         const userRef = yield call(createUserProfile, userAuth, additionalData);
-        const userSnapshot = getDoc(userRef);
+        const userSnapshot = yield getDoc(userRef);
         yield put(signInSuccess({id: userSnapshot.id, ...userSnapshot.data}));
     } catch (error) {
         yield put(signInFailure({error: error}));

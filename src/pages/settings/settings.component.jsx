@@ -16,8 +16,8 @@ const SettingsPage = () => {
     }
     }, [currentUser, navigate]);
 
-    const [userCredentials, setUserCredentials] = useState({barcode: '', email: '', audition: ''});
-    const {barcode, email, audition} = userCredentials;
+    const [userCredentials, setUserCredentials] = useState({displayName: '', email: '', audition: ''});
+    const {displayName, email, audition} = userCredentials;
 
     const handleSubmit = async event => {
         event.preventDefault();
@@ -36,8 +36,8 @@ const SettingsPage = () => {
             <form onSubmit={handleSubmit}>
                 <FormInput
                     type='text'
-                    name='barcode'
-                    value={barcode}
+                    name='displayName'
+                    value={displayName}
                     onChange={handleChange}
                     label='Barcode'
                     required
