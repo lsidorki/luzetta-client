@@ -4,8 +4,9 @@
     flex-direction: row;
     align-items: center;
     padding: 21px 31px;
+    position: sticky;
+    z-index: 3;
 
-    position: static;
     width: 100%;
     min-width: 700px;
     height: 82px;

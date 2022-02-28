@@ -5,7 +5,17 @@ import ImportFileActionTypes from "./import-file.types";
 export function* processImportedData({payload : {importedData}}) {
     try {
         console.log(importedData);
-        // filter per person
+        const barcodes = new Set();
+        console.log(importedData.includes("Autor_Wpisu"));
+        importedData.map(data => {
+            barcodes.add(data.Autor_wpisu);
+            return barcodes;
+        });
+        console.log(barcodes);
+        if(barcodes.size < 1) {
+            throw new Error("Could not find any entries. Endure you have the correct file format.")
+        }
+
         // create collections: report > user/audition
         // insert to database
         yield put(processFileSuccess({reportData: importedData}))

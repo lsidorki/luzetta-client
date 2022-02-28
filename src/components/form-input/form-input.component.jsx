@@ -1,17 +1,17 @@
 import React from "react";
+import './form-input.styles.scss'
 
-const FormInput = ({handleChange, label, placeholder, ...otherProps}) => {
-    const copyToClipboard = () => {
-        navigator.clipboard.writeText(placeholder);
-        console.log("Copied: " + placeholder);
-    };
-    return (<div className="group">
-        <div className="input-group mb-3">
-            <span className="input-group-text">{label}</span>
-            <input type="text" className="form-control" placeholder={placeholder} value={placeholder} aria-label={label} aria-describedby="button-addon2" disabled readOnly />
-            <button className="btn btn-outline-secondary" type="button" id="button-addon2" onClick={copyToClipboard}>Copy</button>
-        </div>
-    </div>)
-}
+const FormInput = ({handleChange, label, ...otherProps}) => (
+    <div className="group-input">
+        <input className="form-input" onChange={handleChange} {...otherProps} />
+        {
+            label ? 
+            (<label className={`${otherProps.value.length ? 'shrink' : ''} form-input-label`}>
+                {label}
+            </label>)
+            : null
+        }
+    </div>
+)
 
 export default FormInput;

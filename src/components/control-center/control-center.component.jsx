@@ -24,8 +24,8 @@ const ControlCenter = ({openFileStart}) => {
 
     return (
         <div className="control-center">
-            <CustomButton onChange={readUploadFile} name="OPEN FILE" isOpenFile={true} />
-            <CustomButton type="button" name="DONATE" isDonate={true} />
+            <CustomButton onChange={readUploadFile} isOpenFile={true}>OPEN FILE</CustomButton>
+            <CustomButton type="button" isDonate={true}>DONATE</CustomButton>
         </div>
     )
 }
