@@ -1,4 +1,4 @@
-import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
+import { getFirestore, doc, setDoc, getDoc, addDoc, collection } from 'firebase/firestore';
 
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
@@ -45,6 +45,35 @@ export const createUserProfile = async (userAuth, additionalData) => {
     }
 
     return userRef;
+}
+
+export const registerNewReport = async () => {
+    const reportDateTime = new Date().toISOString();
+    const reportDate = reportDateTime.split("T");
+
+    const reportRef = doc(firestore, `reports/${reportDate[0]}`);
+    const snapShot = await getDoc(reportRef);
+    if(!snapShot.exists()) {
+        try {
+            await setDoc(reportRef, {
+                reportDateTime
+            });
+            return reportRef;
+        } catch (error) {
+            console.log('Error creating a report', error.message);
+        }
+    }
+
+    throw new Error("Document already exists.");
+}
+
+export const importTracklist = async (tracklist, reportRef) => {
+    tracklist.forEach(track => {
+        const trackRef = addDoc(collection(firestore, `reports/${reportRef.id}/${track.barcode || "_undefined"}`), {
+            track
+        });
+        return trackRef;
+    })
 }
 
 export const getCurrentUser = () => {

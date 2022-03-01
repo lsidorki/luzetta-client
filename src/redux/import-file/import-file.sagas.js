@@ -1,10 +1,10 @@
 import { all, call, put, takeLatest } from "redux-saga/effects";
+import { importTracklist, registerNewReport } from "../../firebase/firebase.utils";
 import { processFileFailure, processFileSuccess } from "./import-file.actions";
 import ImportFileActionTypes from "./import-file.types";
 
 export function* processImportedData({payload : {importedData}}) {
     try {
-        console.log(importedData);
         const barcodes = new Set();
         const tracklist = new Set();
         importedData.map(data => {
@@ -12,21 +12,26 @@ export function* processImportedData({payload : {importedData}}) {
             const lyricits = data['Writer/Lyricist'];
             barcodes.add(Autor_wpisu);
             tracklist.add({
-                barcode: Autor_wpisu,
-                artist: Artist,
-                title: Title,
-                album: Album,
-                composer: Composer,
-                category: Category,
-                runtime: Runtime,
-                lyricist: lyricits
+                barcode: Autor_wpisu || '',
+                artist: Artist || '',
+                title: Title || '',
+                album: Album || '',
+                composer: Composer || '',
+                category: Category || '',
+                runtime: Runtime || '',
+                lyricist: lyricits || ''
             });
             return tracklist;
         });
         console.log(tracklist);
         console.log(barcodes);
         if(barcodes.size < 1) {
-            throw new Error("Could not find any entries. Endure you have the correct file format.")
+            throw new Error("Could not find any entries. Ensure you have the correct file format.")
+        }
+
+        const reportRef = yield call(registerNewReport);
+        if(reportRef) {
+            yield call(importTracklist, tracklist, reportRef);
         }
 
         // create collections: report > user/audition
