@@ -2,7 +2,7 @@ import { combineReducers } from "redux"
 import storage from "redux-persist/lib/storage"
 import { persistReducer } from "redux-persist"
 import tracklistReducer from "./tracklist/tracklist.reducer"
-import importXlsxReducer from "./import-file/import-file.reducer"
+import importFileReducer from "./import-file/import-file.reducer"
 import userReducer from "./user/user.reducer"
 
 const persistConfig = {
@@ -12,7 +12,7 @@ const persistConfig = {
 }
 
 const rootReducer = combineReducers({
-    importXlsx: importXlsxReducer,
+    importFile: importFileReducer,
     tracklist: tracklistReducer,
     user: userReducer
 })

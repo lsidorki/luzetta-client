@@ -1,4 +1,4 @@
-import { getFirestore, doc, setDoc, getDoc, addDoc, collection } from 'firebase/firestore';
+import { getFirestore, doc, setDoc, getDoc, addDoc, collection, getDocs } from 'firebase/firestore';
 
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
@@ -74,6 +74,22 @@ export const importTracklist = async (tracklist, reportRef) => {
         });
         return trackRef;
     })
+}
+
+export const fetchTracklistByBarcode = async (barcode, report) => {
+    const tracklistRef = collection(firestore, `reports/${report}/${barcode}`);
+    const snapShot = await getDocs(tracklistRef);
+    if(snapShot.docs.length < 1) {
+        throw new Error("Tracklist could not be fetched for: " + report + '/' + barcode);
+    }
+    const trackList = snapShot.docs.map(track => {
+        const trackData = track.data();
+        return {
+            id: track.id,
+            ...trackData.track
+        }
+    });
+    return trackList;
 }
 
 export const getCurrentUser = () => {

@@ -23,8 +23,7 @@ export function* processImportedData({payload : {importedData}}) {
             });
             return tracklist;
         });
-        console.log(tracklist);
-        console.log(barcodes);
+        
         if(barcodes.size < 1) {
             throw new Error("Could not find any entries. Ensure you have the correct file format.")
         }

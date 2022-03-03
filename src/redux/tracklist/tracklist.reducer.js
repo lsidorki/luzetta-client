@@ -1,27 +1,33 @@
 import TracklistActionTypes from "./tracklist.types";
 
 const INITIAL_STATE = {
-    tracklist: null,
+    userTracklist: null,
+    isFetching: false,
     error: null
 }
 
 const tracklistReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case TracklistActionTypes.START_FETCHING_DISCOGS:
-            return {
-                ...state,
-                error: null
-            }
-        case TracklistActionTypes.SUCCESS_FETCHING_DATA:
+        case TracklistActionTypes.FETCH_TRACKLIST_START:
             return {
                 ...state,
                 error: null,
-                tracklist: action.payload
+                isFetching: true
+            }
+        case TracklistActionTypes.SUCCESS_FETCHING_DATA: 
+        case TracklistActionTypes.FETCH_TRACKLIST_SUCCESS:
+            return {
+                ...state,
+                error: null,
+                userTracklist: action.payload,
+                isFetching: false
             }
         case TracklistActionTypes.ERROR_FETCHING_DATA:
             return {
                 ...state,
-                error: action.payload
+                error: action.payload,
+                isFetching: false
             }
         default:
             return state;
