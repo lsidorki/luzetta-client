@@ -4,8 +4,10 @@ import { openFileStart } from "../../redux/import-file/import-file.actions";
 import CustomButton from "../custom-button/custom-button.component";
 import './control-center.styles.scss'
 import { read, utils } from "xlsx"
+import { createStructuredSelector } from "reselect";
+import { selectCurrentUser } from "../../redux/user/user.selectors";
 
-const ControlCenter = ({openFileStart}) => {
+const ControlCenter = ({currentUser, openFileStart}) => {
     const readUploadFile = (e) => {
         e.preventDefault();
         if (e.target.files) {
@@ -24,7 +26,11 @@ const ControlCenter = ({openFileStart}) => {
 
     return (
         <div className="control-center">
-            <CustomButton onChange={readUploadFile} isOpenFile={true}>OPEN FILE</CustomButton>
+            {
+                currentUser ? 
+                <CustomButton onChange={readUploadFile} isOpenFile={true}>OPEN FILE</CustomButton>
+                : null
+            }
             <CustomButton type="button" isDonate={true}>DONATE</CustomButton>
         </div>
     )
@@ -34,4 +40,8 @@ const mapDispatchToProps = dispatch => ({
     openFileStart: (importedData, sheetName) => dispatch(openFileStart({importedData, sheetName}))
 })
 
-export default connect(null, mapDispatchToProps)(ControlCenter);
+const mapStateToProps = createStructuredSelector({
+    currentUser: selectCurrentUser
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ControlCenter);
