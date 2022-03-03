@@ -9,7 +9,14 @@ export function* getSnapshotFromUserAuth(userAuth, additionalData) {
     try {
         const userRef = yield call(createUserProfile, userAuth, additionalData);
         const userSnapshot = yield getDoc(userRef);
-        yield put(signInSuccess({id: userSnapshot.id, ...userSnapshot.data}));
+        const {displayName, email, barcode, audition} = userSnapshot._document.data.value.mapValue.fields;
+        yield put(signInSuccess({
+            id: userSnapshot.id, 
+            email: email.stringValue, 
+            displayName: displayName.stringValue,
+            barcode: barcode ? barcode.stringValue : '',
+            audition: audition ? audition.stringValue : '' 
+        }));
     } catch (error) {
         yield put(signInFailure({error: error}));
     }

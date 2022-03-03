@@ -20,6 +20,14 @@
     flex-grow: 0;
     margin: 5px 0px;
 
+    &:disabled {
+        background: linear-gradient(40deg, #ffedb9, #fff8e5da);
+
+        &:hover {
+            background: linear-gradient(40deg, #ffedb9, #fff8e5da);
+        }
+    }
+
     &:hover {
         background: linear-gradient(40deg, #ffd044, #ffe081da);
     }

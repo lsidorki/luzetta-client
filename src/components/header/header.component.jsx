@@ -11,7 +11,12 @@ const Header = ({currentUser, signOutStart}) => (
         <Link className="logo" to="/">LUZetta</Link>
         <div className="options">
             <Link className="option" to="/">HOME</Link>
-            <Link className="option" to="/report">YOUR REPORT</Link>
+            {
+                currentUser ?
+                <Link className="option" to="/report">YOUR REPORT</Link>
+                :
+                null
+            }
             {
                 currentUser ?
                 <Link className="option" to="/settings">SETTINGS</Link>

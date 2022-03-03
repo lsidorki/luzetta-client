@@ -1,26 +1,46 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import CustomButton from "../../components/custom-button/custom-button.component";
 import FormInput from "../../components/form-input/form-input.component";
 import { selectCurrentUser } from "../../redux/user/user.selectors";
 import './settings.styles.scss'
 
 const SettingsPage = () => {
 
-    const currentUser = useSelector(selectCurrentUser);
     let navigate = useNavigate();
     
+    const currentUser = useSelector(selectCurrentUser);
+    
     useEffect(() => {
-        if (!currentUser){
-        return navigate("/");
-    }
+        if (!currentUser) return navigate("/");
     }, [currentUser, navigate]);
 
-    const [userCredentials, setUserCredentials] = useState({displayName: '', email: '', audition: ''});
-    const {displayName, email, audition} = userCredentials;
+    
+    const [userCredentials, setUserCredentials] = useState({
+        displayName: '', 
+        email: '', 
+        audition: '',
+        barcode: ''
+    });
+
+    const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        if(currentUser) {
+            console.log("Current User: " + JSON.stringify(currentUser));
+            setUserCredentials({
+                displayName: currentUser.displayName, 
+                email: currentUser.email, 
+                audition: currentUser.audition,
+                barcode: currentUser.barcode
+            });
+        }
+    }, [currentUser]);
 
     const handleSubmit = async event => {
         event.preventDefault();
+        setIsLoading(true);
         console.log("Updating the data...");
     }
 
@@ -37,27 +57,34 @@ const SettingsPage = () => {
                 <FormInput
                     type='text'
                     name='displayName'
-                    value={displayName}
+                    value={userCredentials.displayName}
                     onChange={handleChange}
-                    label='Barcode'
+                    label='Display Name'
                     required
                 />
                 <FormInput
                     type='text'
                     name='email'
-                    value={email}
+                    value={userCredentials.email}
                     onChange={handleChange}
                     label='E-mail'
                     required
                 />
                 <FormInput
                     type='text'
+                    name='barcode'
+                    value={userCredentials.barcode}
+                    onChange={handleChange}
+                    label='Barcode'
+                />
+                <FormInput
+                    type='text'
                     name='audition'
-                    value={audition}
+                    value={userCredentials.audition}
                     onChange={handleChange}
                     label='Audition'
-                    required
                 />
+                <CustomButton disabled={isLoading}>Change the data</CustomButton>
             </form>
         </div>
     )
