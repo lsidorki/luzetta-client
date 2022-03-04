@@ -29,7 +29,7 @@
     }
 
     &:hover {
-        background: linear-gradient(40deg, #ffd044, #ffe081da);
+        background: linear-gradient(40deg, #ffbf00, #f3bb14da);
     }
 
     &.donate {
@@ -40,6 +40,18 @@
             background: linear-gradient(40deg, #c9b1ff, #d3c2ff);
             border: none;
         }
+    }
+
+    &.google-sign-in {
+        background-color: #4285f4;
+        background: linear-gradient(40deg, #4285f4, #5f9cff);
+        color: white;
+
+        &:hover {
+            background-color: #357ae8;
+            background: linear-gradient(40deg, #357ae8, #4382e9);
+            border: none;
+          }
     }
 
     .file {

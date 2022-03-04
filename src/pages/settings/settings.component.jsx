@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import CustomButton from "../../components/custom-button/custom-button.component";
 import FormInput from "../../components/form-input/form-input.component";
-import { selectCurrentUser } from "../../redux/user/user.selectors";
+import { updateUserStart } from "../../redux/user/user.actions";
+import { selectCurrentUser, selectIsUpdating } from "../../redux/user/user.selectors";
 import './settings.styles.scss'
 
 const SettingsPage = () => {
@@ -11,11 +12,12 @@ const SettingsPage = () => {
     let navigate = useNavigate();
     
     const currentUser = useSelector(selectCurrentUser);
+    const isUpdating = useSelector(selectIsUpdating);
+    const dispatch = useDispatch();
     
     useEffect(() => {
         if (!currentUser) return navigate("/");
     }, [currentUser, navigate]);
-
     
     const [userCredentials, setUserCredentials] = useState({
         displayName: '', 
@@ -24,12 +26,10 @@ const SettingsPage = () => {
         barcode: ''
     });
 
-    const [isLoading, setIsLoading] = useState(false);
-
     useEffect(() => {
         if(currentUser) {
-            console.log("Current User: " + JSON.stringify(currentUser));
             setUserCredentials({
+                uid: currentUser.id,
                 displayName: currentUser.displayName, 
                 email: currentUser.email, 
                 audition: currentUser.audition,
@@ -40,8 +40,7 @@ const SettingsPage = () => {
 
     const handleSubmit = async event => {
         event.preventDefault();
-        setIsLoading(true);
-        console.log("Updating the data...");
+        dispatch(updateUserStart(userCredentials));
     }
 
     const handleChange = event => {
@@ -61,6 +60,7 @@ const SettingsPage = () => {
                     onChange={handleChange}
                     label='Display Name'
                     required
+                    disabled
                 />
                 <FormInput
                     type='text'
@@ -69,6 +69,7 @@ const SettingsPage = () => {
                     onChange={handleChange}
                     label='E-mail'
                     required
+                    disabled
                 />
                 <FormInput
                     type='text'
@@ -84,7 +85,7 @@ const SettingsPage = () => {
                     onChange={handleChange}
                     label='Audition'
                 />
-                <CustomButton disabled={isLoading}>Change the data</CustomButton>
+                <CustomButton disabled={isUpdating}>Change the data</CustomButton>
             </form>
         </div>
     )

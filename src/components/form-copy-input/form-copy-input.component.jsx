@@ -8,7 +8,6 @@ const FormCopyInput = ({handleChange, label, placeholder, ...otherProps}) => {
     const copyToClipboard = () => {
         navigator.clipboard.writeText(placeholder);
         showTooltip();
-        console.log("Copied: " + placeholder);
     };
 
     const showTooltip = () => {

@@ -1,8 +1,8 @@
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-import { getDoc } from 'firebase/firestore';
+import { getDoc, updateDoc } from 'firebase/firestore';
 import { all, call, put, takeLatest } from "redux-saga/effects";
 import { auth, googleProvider, createUserProfile, getCurrentUser } from "../../firebase/firebase.utils";
-import { signInFailure, signInSuccess, signOutFailure, signOutSuccess, signUpFailure, signUpSuccess } from "./user.actions";
+import { checkUserSession, signInFailure, signInSuccess, signOutFailure, signOutSuccess, signUpFailure, signUpSuccess, updateUserFailure, updateUserSuccess } from "./user.actions";
 import UserActionTypes from "./user.types";
 
 export function* getSnapshotFromUserAuth(userAuth, additionalData) {
@@ -72,6 +72,19 @@ export function* signInAfterSignUp({payload : {user, additionalData}}) {
     yield getSnapshotFromUserAuth(user, additionalData);
 }
 
+export function* updateUserDetails({payload: currentUser}) {
+    try {
+        const userRef = yield call(createUserProfile, currentUser);
+        const {barcode, audition} = currentUser;
+        const modifiedAt = new Date();
+        yield updateDoc(userRef, {barcode, audition, modifiedAt});
+        yield put(updateUserSuccess());
+        yield put(checkUserSession());
+    } catch (error) {
+        yield put(updateUserFailure(error));
+    }
+}
+
 export function* onGoogleSignInStart() {
     yield takeLatest(UserActionTypes.GOOGLE_SIGN_IN_START, signInWithGoogle)
 }
@@ -96,6 +109,10 @@ export function* onSignUpSuccess() {
     yield takeLatest(UserActionTypes.SIGN_UP_SUCCESS, signInAfterSignUp)
 }
 
+export function* onUpdateUserStart() {
+    yield takeLatest(UserActionTypes.UPDATE_USER_START, updateUserDetails)
+}
+
 export function* userSagas() {
     yield all([
         call(onGoogleSignInStart),
@@ -103,6 +120,7 @@ export function* userSagas() {
         call(onCheckUserSession),
         call(onSignOutStart),
         call(onSignUpStart),
-        call(onSignUpSuccess)
+        call(onSignUpSuccess),
+        call(onUpdateUserStart)
     ]);
 }

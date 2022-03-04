@@ -8,7 +8,7 @@ const CustomButton = ({children, onChange, isDonate, isOpenFile, isGoogleSignIn,
         <label htmlFor="file">{children}</label>
     </div>
     ) :
-        (<button className={`custom-button${isDonate ? ' donate' : ''}`} {...otherProps}>
+        (<button className={`custom-button${isDonate ? ' donate' : ''} ${isGoogleSignIn ? 'google-sign-in' : '' }`} {...otherProps}>
         {children}
     </button>
     )
