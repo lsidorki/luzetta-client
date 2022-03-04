@@ -6,8 +6,11 @@ import './control-center.styles.scss'
 import { read, utils } from "xlsx"
 import { createStructuredSelector } from "reselect";
 import { selectCurrentUser } from "../../redux/user/user.selectors";
+import DonateModal from "../donate/donate.component";
 
 const ControlCenter = ({currentUser, openFileStart}) => {
+    const [modalShow, setModalShow] = React.useState(false);
+
     const readUploadFile = (e) => {
         e.preventDefault();
         if (e.target.files) {
@@ -28,10 +31,11 @@ const ControlCenter = ({currentUser, openFileStart}) => {
         <div className="control-center">
             {
                 currentUser ? 
-                <CustomButton onChange={readUploadFile} isOpenFile={true}>OPEN FILE</CustomButton>
+                <CustomButton onChange={readUploadFile} isOpenFile={true}>IMPORT FILE</CustomButton>
                 : null
             }
-            <CustomButton type="button" isDonate={true}>DONATE</CustomButton>
+            <CustomButton type="button" isDonate={true} onClick={() => setModalShow(true)}>DONATE</CustomButton>
+            <DonateModal show={modalShow} onHide={() => setModalShow(false)} />
         </div>
     )
 }
