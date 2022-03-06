@@ -10,6 +10,7 @@ import DonateModal from "../donate/donate.component";
 
 const ControlCenter = ({currentUser, openFileStart}) => {
     const [modalShow, setModalShow] = React.useState(false);
+    const { role } = currentUser || 'none';
 
     const readUploadFile = (e) => {
         e.preventDefault();
@@ -27,11 +28,19 @@ const ControlCenter = ({currentUser, openFileStart}) => {
         }
     }
 
+    const fetchTracksDataExt = e => {
+        e.preventDefault();
+        console.log("Start fetching external data about tracks.");
+    }
+
     return (
         <div className="control-center">
             {
-                currentUser ? 
-                <CustomButton onChange={readUploadFile} isOpenFile={true}>IMPORT FILE</CustomButton>
+                currentUser && (role === 'maintain') ? 
+                <div className="maintain-panel">
+                    <CustomButton onChange={readUploadFile} isOpenFile={true}>IMPORT FILE</CustomButton>
+                    <CustomButton onClick={fetchTracksDataExt}>FETCH TRACKS DATA</CustomButton>
+                </div>
                 : null
             }
             <CustomButton type="button" isDonate={true} onClick={() => setModalShow(true)}>DONATE</CustomButton>

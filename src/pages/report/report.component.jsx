@@ -8,7 +8,7 @@ import './report.styles.scss'
 const ReportPage = ({fetchTracklistStart, match}) => {
 
     useEffect(() => {
-        fetchTracklistStart({barcode: "lsidorkiewicz", report: "2022-03-01"});
+        fetchTracklistStart({barcode: "alalka", report: "2022-03-01"});
     }, [fetchTracklistStart]);
 
     return(
@@ -21,7 +21,7 @@ const ReportPage = ({fetchTracklistStart, match}) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-    fetchTracklistStart: () => dispatch(fetchTracklistStart({barcode: "lsidorkiewicz", report: "2022-03-01"}))
+    fetchTracklistStart: () => dispatch(fetchTracklistStart({barcode: "aarczynska", report: "2022-03-01"}))
 })
 
 export default connect(null, mapDispatchToProps)(ReportPage);

@@ -11,3 +11,8 @@ export const selectIsUpdating = createSelector(
     [selectUser],
     (user) => user.isUpdating
 )
+
+export const selectRole = createSelector(
+    [selectUser],
+    (user) => user.role
+)
