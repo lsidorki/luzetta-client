@@ -7,9 +7,11 @@ import { read, utils } from "xlsx"
 import { createStructuredSelector } from "reselect";
 import { selectCurrentUser } from "../../redux/user/user.selectors";
 import DonateModal from "../donate/donate.component";
+import FetchDataApiModal from "../fetch-data-api/fetch-data-api.component";
 
 const ControlCenter = ({currentUser, openFileStart}) => {
-    const [modalShow, setModalShow] = React.useState(false);
+    const [donateModalShow, setDonateModalShow] = React.useState(false);
+    const [fetchModalShow, setFetchModalShow] = React.useState(false);
     const { role } = currentUser || 'none';
 
     const readUploadFile = (e) => {
@@ -28,23 +30,19 @@ const ControlCenter = ({currentUser, openFileStart}) => {
         }
     }
 
-    const fetchTracksDataExt = e => {
-        e.preventDefault();
-        console.log("Start fetching external data about tracks.");
-    }
-
     return (
         <div className="control-center">
             {
                 currentUser && (role === 'maintain') ? 
                 <div className="maintain-panel">
                     <CustomButton onChange={readUploadFile} isOpenFile={true}>IMPORT FILE</CustomButton>
-                    <CustomButton onClick={fetchTracksDataExt}>FETCH TRACKS DATA</CustomButton>
+                    <CustomButton onClick={() => setFetchModalShow(true)}>FETCH TRACKS DATA</CustomButton>
                 </div>
                 : null
             }
-            <CustomButton type="button" isDonate={true} onClick={() => setModalShow(true)}>DONATE</CustomButton>
-            <DonateModal show={modalShow} onHide={() => setModalShow(false)} />
+            <CustomButton type="button" isDonate={true} onClick={() => setDonateModalShow(true)}>DONATE</CustomButton>
+            <DonateModal show={donateModalShow} onHide={() => setDonateModalShow(false)} />
+            <FetchDataApiModal show={fetchModalShow} onHide={() => setFetchModalShow(false)} />
         </div>
     )
 }

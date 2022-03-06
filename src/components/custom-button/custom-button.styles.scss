@@ -18,7 +18,7 @@
     flex: none;
     order: 0;
     flex-grow: 0;
-    margin: 5px 0px;
+    margin: 5px auto;
 
     &:disabled {
         background: linear-gradient(40deg, #ffedb9, #fff8e5da);
@@ -37,7 +37,7 @@
         color: white;
 
         &:hover {
-            background: linear-gradient(40deg, #9b70ff, #c0a7ff);
+            background: linear-gradient(40deg, #c9b1ff, #d3c2ff);
             border: none;
         }
     }
