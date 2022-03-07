@@ -1,15 +1,20 @@
 import React, { useEffect } from "react";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import { fetchTracklistStart } from "../../redux/tracklist/tracklist.actions";
 import TracklistPageContainer from "../tracklist/tracklist.container";
 import './report.styles.scss'
 
-const ReportPage = ({fetchTracklistStart, match}) => {
+const ReportPage = ({match}) => {
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        fetchTracklistStart({barcode: "alalka", report: "2022-03-01"});
-    }, [fetchTracklistStart]);
+        dispatch(fetchTracklistStart({
+            barcode: "akubala", 
+            report: "2022-03-01"
+        }));
+    }, [dispatch]);
 
     return(
         <div className="report">
@@ -20,8 +25,4 @@ const ReportPage = ({fetchTracklistStart, match}) => {
     )
 }
 
-const mapDispatchToProps = dispatch => ({
-    fetchTracklistStart: () => dispatch(fetchTracklistStart({barcode: "aarczynska", report: "2022-03-01"}))
-})
-
-export default connect(null, mapDispatchToProps)(ReportPage);
+export default ReportPage;

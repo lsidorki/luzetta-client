@@ -43,7 +43,7 @@ const FetchDataApiModal = (props) => {
         <Modal.Body>
             <div className="fetch-data-api-modal-content">
                 <h4>API Credentials</h4>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} autoComplete="off">
                     <FormInput
                         type='text'
                         name='username'

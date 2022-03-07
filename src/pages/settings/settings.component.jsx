@@ -52,7 +52,7 @@ const SettingsPage = () => {
         <div className="settings">
             <h2>Account Settings</h2>
             <span>Here you can update your personal data</span>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} autoComplete="off">
                 <FormInput
                     type='text'
                     name='displayName'
