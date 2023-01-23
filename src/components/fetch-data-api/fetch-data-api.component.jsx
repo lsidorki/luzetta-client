@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Button, Modal, ProgressBar } from "react-bootstrap";
+import { Modal, ProgressBar } from "react-bootstrap";
 import { useDispatch } from "react-redux";
+import { fetchTidalDataStart } from "../../redux/tracklist/tracklist.actions";
 import CustomButton from "../custom-button/custom-button.component";
 import FormInput from "../form-input/form-input.component";
 import './fetch-data-api.styles.scss'
@@ -12,16 +13,15 @@ const FetchDataApiModal = (props) => {
     const [userCredentials, setUserCredentials] = useState({
         username: '', 
         password: '', 
-        apikey: ''
+        token: ''
     });
 
     const [now, setNow] = useState(0);
 
     const handleSubmit = async event => {
         event.preventDefault();
-        console.log("Handle Submit");
         setNow(100);
-        // dispatch(updateUserStart(userCredentials));
+        dispatch(fetchTidalDataStart(userCredentials));
     }
 
     const handleChange = event => {
@@ -50,7 +50,7 @@ const FetchDataApiModal = (props) => {
                         value={userCredentials.username}
                         onChange={handleChange}
                         label='Username'
-                        required
+                        // required
                     />
                     <FormInput
                         type='password'
@@ -58,15 +58,15 @@ const FetchDataApiModal = (props) => {
                         value={userCredentials.password}
                         onChange={handleChange}
                         label='Password'
-                        required
+                        // required
                     />
                     <FormInput
                         type='text'
-                        name='apikey'
-                        value={userCredentials.apikey}
+                        name='token'
+                        value={userCredentials.token}
                         onChange={handleChange}
-                        label='API key'
-                        required
+                        label='API token'
+                        // required
                     />
                     <CustomButton>Process the data</CustomButton>
                 </form>

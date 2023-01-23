@@ -24,6 +24,7 @@ const tracklistReducer = (state = INITIAL_STATE, action) => {
                 isFetching: false
             }
         case TracklistActionTypes.ERROR_FETCHING_DATA:
+        case TracklistActionTypes.FETCH_TIDAL_FAILURE:
             return {
                 ...state,
                 error: action.payload,
